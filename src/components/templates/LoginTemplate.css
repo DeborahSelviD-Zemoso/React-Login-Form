@@ -1,4 +1,4 @@
-#wrapper {
+.wrapper {
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -6,7 +6,7 @@
   background: gray;
 }
 
-#form-wrapper {
+.form-wrapper {
   min-width: 400px;
   background: white;
   min-height: 400px;

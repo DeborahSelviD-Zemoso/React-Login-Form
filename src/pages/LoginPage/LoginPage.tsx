@@ -1,8 +1,8 @@
 import LoginForm from "../../components/organisms/LoginForm/LoginForm";
-import LoginTemplate from "../../components/Templates/LoginTemplate";
+import LoginTemplate from "../../components/templates/LoginTemplate";
 
-const LoginPage: React.FC<{}> = () => {
-  return <LoginTemplate Form={LoginForm} />;
+const LoginPage: React.FC = () => {
+  return <LoginTemplate FormComponent={LoginForm} />;
 };
 
 export default LoginPage;

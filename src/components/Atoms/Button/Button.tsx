@@ -1,12 +1,12 @@
 import "./Button.css";
 
-interface ButtonProps {
-  disabled: boolean;
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  disabled?: boolean;
 }
 
-const Button: React.FC<ButtonProps> = ({ disabled }) => {
+const Button: React.FC<ButtonProps> = ({ disabled = true, ...props }) => {
   return (
-    <button type="submit" disabled={disabled}>
+    <button type="submit" className="btn" disabled={disabled} {...props}>
       Login
     </button>
   );

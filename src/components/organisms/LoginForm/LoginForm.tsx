@@ -4,38 +4,52 @@ import Input from "../../Atoms/Input/Input";
 import Button from "../../Atoms/Button/Button";
 import "./LoginForm.css";
 
-const LoginForm: React.FC<{}> = () => {
-  let [userName, setUserName] = useState<string>("");
-  let [password, setPassword] = useState<string>("");
-  let [userValid, setUserValid] = useState<boolean>(false);
-  let [passwordValid, setPasswordValid] = useState<boolean>(false);
+type FormData = {
+  username: string;
+  password: string;
+  usernameValid: boolean;
+  passwordValid: boolean;
+};
 
-  const handleInputUserName = (event: ChangeEvent<HTMLInputElement>) => {
-    setUserName(event.target.value);
-    const regEx = /^(?![_.])[a-zA-Z0-9_.]{3,16}(?<![_.])$/;
-    console.log(event.target.value);
-    console.log(regEx.test(event.target.value));
-    setUserValid(regEx.test(event.target.value));
+const LoginForm: React.FC = () => {
+  let [formData, setFormData] = useState<FormData>({
+    username: "",
+    password: "",
+    usernameValid: false,
+    passwordValid: false,
+  });
+
+  const handleInput = (event: ChangeEvent<HTMLInputElement>, name: string) => {
+    const regExValidation: Record<string, RegExp> = {
+      username: /^(?![_.])[a-zA-Z0-9_.]{3,16}(?<![_.])$/,
+      password: /^[a-zA-Z0-9_.@#$%^&*]{6,16}$/,
+    };
+
+    setFormData((prevForm: FormData) => ({
+      ...prevForm,
+      [name]: event.target.value,
+      [`${name}Valid`]: regExValidation[name].test(event?.target.value),
+    }));
   };
-  const handleInputPassword = (event: ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value);
-    const regEx = /^[a-zA-Z0-9_.@#$%^&*]{6,16}$/;
-    setPasswordValid(regEx.test(event.target.value));
-  };
+
   return (
     <form>
       <Input
-        text="User Name"
-        value={userName}
-        handleInput={handleInputUserName}
+        label="User Name"
+        type="text"
+        value={formData.username}
+        handleInput={(e) => handleInput(e, "username")}
       ></Input>
       <Input
-        text="Password"
-        value={password}
-        handleInput={handleInputPassword}
+        label="Password"
+        type="password"
+        value={formData.password}
+        handleInput={(e) => handleInput(e, "password")}
       ></Input>
       <div className="submit-wrapper">
-        <Button disabled={!userValid || !passwordValid}></Button>
+        <Button
+          disabled={!formData.usernameValid || !formData.passwordValid}
+        ></Button>
       </div>
     </form>
   );
